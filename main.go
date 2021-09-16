@@ -13,10 +13,9 @@ import (
 
 func main() {
 	if len(os.Args) <= 1 {
-		fmt.Printf("%s <key-filename>\n", os.Args[0])
+		fmt.Printf("%s <keyname>\n", os.Args[0])
 		return
 	}
-	
 	pub, pri, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
 		log.Fatal(err)
@@ -25,8 +24,8 @@ func main() {
 	log.Printf("Ed25519 Private Key: %s", hex.EncodeToString(pri))
 	log.Printf("Ed25519 Public Key: %s", hex.EncodeToString(pub))
 
-	priFileName := os.Args[1]
-	pubFileName := fmt.Sprintf("%s.pub", priFileName)
+	priFileName := fmt.Sprintf("%s.key", os.Args[1])
+	pubFileName := fmt.Sprintf("%s.pub", os.Args[1])
 
 	pkcsBytes, err := x509.MarshalPKCS8PrivateKey(pri)
 	if err != nil {
